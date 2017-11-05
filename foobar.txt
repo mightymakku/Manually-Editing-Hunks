@@ -9,4 +9,5 @@ These are some
 additional lines way below
 the lines at the top
 of the file.
+This is a new line at the end of the file.
 
