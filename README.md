@@ -68,7 +68,7 @@ Now let's assume we only wanted to stage the new line at the end of the file for
 
 The `git diff` output above shows two hunks, identifiable by their respective `@@ -1,7 +1,9 @@`. and `@@ -9,4 +11,5 @@`.
 
-For each detected hunk, `git add --patch` will (amongst other option) allow us to stage or not stage that hunk:
+For each detected hunk, `git add --patch` will (amongst other options) allow us to stage or not stage that hunk:
 
 ```
 diff --git a/foobar.txt b/foobar.txt
@@ -101,7 +101,7 @@ Stage this hunk [y,n,q,a,d,/,K,g,e,?]?
 ```
 
 Choosing `n` (= no) for the first hunk and `y` (= yes) for the
-second hunk will result in what we wanted to achieve: Despite all changes being in a single file, only the new line at the end of the file is being added to the staging area, the other other changes remain unstaged. This can be verified by `git status` and `git diff`:
+second hunk will result in what we wanted to achieve: Despite all changes being in a single file, only the new line at the end of the file is being added to the staging area, the other changes remain unstaged. This can be verified by `git status` and `git diff`:
 
 ```
 On branch master
@@ -195,7 +195,7 @@ This is the fourth line.
 # aborted and the hunk is left unchanged.
 ```
 
-To successfully edit this hunk, we need to understand what `@@ -1,7 +1,9 @@` actually means: These two pairs of numbers explain the context of this hunk before (`-`) and after (`+`) the changes. For this specific example `-1,7` means the file content displayed for this hunk before the changes starts at line 1 of the file, and shows 7 lines (including the first line, and not counting the lines that make up the changeset, which in this case are the two lines starting with `+`), while `+1,9` means, for the context after the changes, the content displayed starts at line 1 of the file as well, and shows 9 lines (that's two more because we added two more lines).
+To successfully edit this hunk, we need to understand what `@@ -1,7 +1,9 @@` actually means: These two pairs of numbers explain the context of this hunk before (`-`) and after (`+`) the changes. For this specific example, `-1,7` means the file content displayed for this hunk before the changes starts at line 1 of the file, and shows 7 lines (including the first line, and not counting the lines that make up the changeset, which in this case are the two lines starting with `+`), while `+1,9` means, for the context after the changes, the content displayed starts at line 1 of the file as well, and shows 9 lines (that's two more because we added two more lines).
 
 To achieve the result we want (only add the line between the first and the second line to the staging area), we need to not only remove the undesired line `+This is a new line after the fourth line.`, but also adjust the numbers describing the context to make the patch apply cleanly (otherwise it will fail).
 
